@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Basics Booster — Business Edition</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+  :root{
+    --bg:#f7f8fb; --panel:#ffffff; --panel2:#eef1f8; --ink:#1f2333; --muted:#5f6680;
+    --line:#e1e5f0; --accent:#3b5bdb; --accent2:#0c9b6f; --warn:#b45309; --warnbg:#fff7ed;
+    --biz:#0c8a5f; --bizbg:#ecfdf5; --code:#f4f6fb; --radius:14px;
+    --maxw:900px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;font-size:16px;}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* layout */
+  .wrap{display:flex;max-width:1240px;margin:0 auto;gap:0}
+  nav.side{position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto;
+    width:270px;flex:0 0 270px;padding:26px 18px;border-right:1px solid var(--line);background:var(--panel)}
+  nav.side h2{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+  nav.side a{display:block;color:var(--ink);padding:7px 10px;border-radius:8px;font-size:14px;margin-bottom:2px}
+  nav.side a:hover{background:var(--panel2);text-decoration:none}
+  nav.side a .t{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px;font-size:12px}
+  nav.side .brand{font-weight:700;font-size:16px;margin-bottom:18px;line-height:1.3}
+  nav.side .brand span{color:var(--accent)}
+
+  main{flex:1;min-width:0;padding:42px 48px 120px;max-width:var(--maxw)}
+
+  /* hero */
+  .hero{border:1px solid var(--line);background:linear-gradient(150deg,#eef2ff,#ffffff);
+    border-radius:var(--radius);padding:30px 32px;margin-bottom:34px;box-shadow:0 1px 3px rgba(20,30,80,.05)}
+  .hero h1{margin:0 0 8px;font-size:30px;line-height:1.2}
+  .hero p.sub{color:var(--muted);margin:0 0 18px;font-size:16px}
+  .meta{display:flex;flex-wrap:wrap;gap:10px}
+  .pill{background:var(--panel);border:1px solid var(--line);border-radius:999px;
+    padding:6px 14px;font-size:13px;color:var(--ink)}
+  .pill b{color:var(--accent2)}
+
+  /* sections */
+  section{margin-bottom:46px;scroll-margin-top:20px}
+  .blocktag{display:inline-block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;margin-bottom:6px}
+  h2.bh{font-size:23px;margin:2px 0 4px;line-height:1.25}
+  .time{color:var(--muted);font-size:13px;margin-bottom:14px}
+  .goal{border-left:3px solid var(--accent);padding:8px 0 8px 16px;color:var(--ink);
+    background:linear-gradient(90deg,rgba(108,140,255,.10),transparent);margin:0 0 18px;border-radius:0 8px 8px 0}
+  .goal b{color:var(--accent)}
+  h3{font-size:17px;margin:24px 0 8px}
+  p{margin:0 0 14px}
+  ul{margin:0 0 14px;padding-left:22px}
+  li{margin-bottom:6px}
+  code.inline{background:var(--code);border:1px solid var(--line);border-radius:6px;
+    padding:1px 6px;font-family:"SF Mono",Menlo,Consolas,monospace;font-size:13.5px;color:#b03570}
+
+  /* code blocks */
+  .codewrap{position:relative;margin:0 0 16px}
+  pre{margin:0;background:var(--code);border:1px solid var(--line);border-radius:12px;
+    padding:16px 16px;overflow-x:auto;font-size:13.5px;line-height:1.55}
+  pre code{font-family:"SF Mono",Menlo,Consolas,monospace;background:none;padding:0}
+  .copybtn{position:absolute;top:8px;right:8px;background:var(--panel2);color:var(--muted);
+    border:1px solid var(--line);border-radius:7px;padding:4px 10px;font-size:12px;cursor:pointer}
+  .copybtn:hover{color:var(--ink);background:var(--line)}
+  .out{display:block;color:var(--accent2);font-size:13px;margin:6px 2px 0;font-family:"SF Mono",Menlo,monospace}
+  .out::before{content:"▸ output: ";color:var(--muted)}
+
+  /* callouts */
+  .callout{border-radius:12px;padding:14px 16px;margin:0 0 16px;border:1px solid}
+  .callout .lab{font-weight:700;font-size:13px;letter-spacing:.04em;display:block;margin-bottom:4px}
+  .callout p{margin:0}
+  .biz{background:var(--bizbg);border-color:#b6e6cf}
+  .biz .lab{color:var(--biz)}
+  .watch{background:var(--warnbg);border-color:#f5d9b0}
+  .watch .lab{color:var(--warn)}
+
+  /* exercise */
+  .ex{border:1px dashed var(--accent);border-radius:12px;padding:16px 18px;margin:18px 0;background:rgba(108,140,255,.05)}
+  .ex .lab{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:.05em;display:block;margin-bottom:6px}
+  .ex .stretch{color:var(--muted);font-size:14px;margin-top:8px}
+  .ex .stretch b{color:var(--accent2)}
+  details.sol{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+  details.sol summary{cursor:pointer;color:var(--accent2);font-size:14px;font-weight:600;list-style:none}
+  details.sol summary::-webkit-details-marker{display:none}
+  details.sol summary::before{content:"▸ ";color:var(--muted)}
+  details.sol[open] summary::before{content:"▾ "}
+
+  /* FAQ + challenge */
+  .faq{border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);
+    padding:6px 20px 16px;margin:22px 0 0}
+  .faqh{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);
+    margin:16px 0 8px;font-weight:700}
+  details.qa{border-bottom:1px solid var(--line);padding:10px 0}
+  details.qa:last-of-type{border-bottom:none}
+  details.qa summary{cursor:pointer;font-weight:600;font-size:15px;color:var(--ink);list-style:none;
+    display:flex;gap:8px}
+  details.qa summary::-webkit-details-marker{display:none}
+  details.qa summary::before{content:"+";color:var(--accent);font-weight:700;flex:0 0 auto}
+  details.qa[open] summary::before{content:"–"}
+  details.qa .qa-body{padding:8px 0 2px 18px}
+  details.qa .qa-body p{margin:0 0 10px}
+  details.qa .qa-body p:last-child{margin-bottom:0}
+  .challenge{border:1px solid #cdd8c4;background:#f4f8ee;border-radius:12px;padding:14px 16px;margin:16px 0 4px}
+  .challenge .lab{color:#4d7a1f;font-weight:700;font-size:13px;letter-spacing:.04em;display:block;margin-bottom:5px}
+  .challenge p{margin:0 0 8px}
+  .challenge details.sol summary{color:#4d7a1f}
+
+  table.cheat{width:100%;border-collapse:collapse;margin:0 0 14px;font-size:14px}
+  table.cheat td,table.cheat th{border:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top}
+  table.cheat th{background:var(--panel2);color:var(--accent)}
+  table.cheat td code{color:#b03570;font-family:"SF Mono",Menlo,monospace;font-size:13px}
+
+  .divider{height:1px;background:var(--line);margin:8px 0 0}
+  footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:18px;margin-top:30px}
+
+  @media (max-width:880px){
+    nav.side{display:none}
+    main{padding:26px 20px 80px}
+    .hero h1{font-size:24px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="side">
+  <div class="brand">🐍 Python Booster<br><span>for Business Students</span></div>
+  <h2>Session map</h2>
+  <a href="#intro"><span class="t">—</span>Start here</a>
+  <a href="#b0"><span class="t">0</span>Setup & mental model</a>
+  <a href="#b1"><span class="t">1</span>Variables & types</a>
+  <a href="#bop"><span class="t">2</span>Operators & operations</a>
+  <a href="#b2"><span class="t">3</span>Lists & dictionaries</a>
+  <a href="#b3"><span class="t">4</span>Logic & loops</a>
+  <a href="#b4"><span class="t">5</span>Functions</a>
+  <a href="#b5"><span class="t">6</span>A taste of pandas</a>
+  <a href="#b6"><span class="t">7</span>Errors & next steps</a>
+  <a href="#cheat"><span class="t">★</span>Cheat sheet</a>
+</nav>
+
+<main>
+
+<div class="hero" id="intro">
+  <h1>Python Basics Booster</h1>
+  <p class="sub">A 2-hour catch-up on the fundamentals — so the rest of your data course stops feeling like a wall.</p>
+  <div class="meta">
+    <span class="pill">⏱ <b>2 hours</b></span>
+    <span class="pill">💻 Runs in <b>Google Colab</b></span>
+    <span class="pill">📊 Built for <b>business students</b></span>
+    <span class="pill">🎯 Mixed level — <b>no experience needed</b></span>
+  </div>
+</div>
+
+<p>You're already in a full data course. This isn't more topics — it's the ground floor underneath them. By the end you'll be able to <b>read</b> a block of Python and predict what it does, <b>write</b> basic data logic without freezing, and <b>fix</b> the everyday errors that throw most beginners.</p>
+
+<p>The whole session rests on one idea:</p>
+<div class="goal"><b>Code is just two moves:</b> store a value, then do something with that value. Every line today is a variation of those two.</div>
+
+<p>Work in Google Colab — nothing to install, it runs in your browser. Open the starter notebook, do <code class="inline">File → Save a copy in Drive</code> so you get your own, and type along. Don't just read the code: <b>predict each cell's output before you run it.</b> That prediction is where the learning actually happens.</p>
+
+<!-- ===================== BLOCK 0 ===================== -->
+<section id="b0">
+  <span class="blocktag">Block 0</span>
+  <h2 class="bh">Setup & the mental model</h2>
+  <div class="time">⏱ 10 min · Goal: everyone running cells, everyone sharing one core idea</div>
+
+  <h3>First, what even <i>is</i> Python doing?</h3>
+  <p>Your computer only understands raw 1s and 0s. Code you write has to be translated for it — and there are two styles of translator:</p>
+  <ul>
+    <li><b>A compiler</b> translates your <i>whole</i> program up front into machine code, then runs that. Think "translate the entire book, then hand it over." Fast to run, but you wait for the translation and it stops at the first error. (Languages like C, Java work this way.)</li>
+    <li><b>An interpreter</b> translates and runs your code <i>line by line</i>, on the spot. Think "a live translator speaking as you go." You get results immediately and can test one line at a time.</li>
+  </ul>
+  <p><b>Python is interpreted.</b> That's exactly why a notebook suits it: you write a little, run it, see the result, and adjust — no "build the whole thing first" step. For learning and for poking at data, that fast feedback loop is a real advantage.</p>
+  <div class="callout biz"><span class="lab">📊 Why a business analyst cares</span>
+  <p>Interpreted means you can explore data conversationally — load a file, peek, filter, check, tweak — getting an answer at each step instead of writing a full program and hoping. It's closer to how you'd poke around a spreadsheet than to traditional "software engineering."</p></div>
+
+  <p>Colab is a notebook: a page of <b>cells</b> you run one at a time. Three things matter today:</p>
+  <ul>
+    <li><b>Run a cell:</b> click it and press <code class="inline">Shift + Enter</code>.</li>
+    <li><b>Order matters:</b> cells share memory, so a cell can depend on one you ran earlier.</li>
+    <li><b>When it gets weird:</b> <code class="inline">Runtime → Restart</code> clears everything and starts fresh. This fixes most mysteries.</li>
+  </ul>
+
+  <p>Run your first cell:</p>
+  <div class="codewrap"><pre><code class="language-python">print("Hello — I am officially writing Python.")</code></pre></div>
+  <span class="out">Hello — I am officially writing Python.</span>
+
+  <div class="callout watch"><span class="lab">⚠ Watch out</span>
+  <p>If you run cells out of order, you'll get confusing errors about things "not defined." When in doubt: <code class="inline">Runtime → Restart and run all</code> from the top.</p></div>
+
+  <div class="faq">
+    <h3 class="faqh">❓ Questions &amp; challenges</h3>
+
+    <details class="qa"><summary>Why does "Restart and run all" fix so many weird errors?</summary>
+    <div class="qa-body"><p>The notebook keeps a running memory (the "kernel") of every variable you've created. Run cells out of order and that memory can hold old or half-finished values that don't match the code on screen. Restart wipes the memory; "run all" rebuilds it cleanly from the top, so what you see is what you get.</p></div></details>
+
+    <details class="qa"><summary>Is Colab "real" Python, or a watered-down version?</summary>
+    <div class="qa-body"><p>It's standard Python running on a Google server — the same language you'd run anywhere. The notebook (cells, the kernel) is just a friendly wrapper around it. Nothing you learn here is Colab-only.</p></div></details>
+
+    <details class="qa"><summary>If interpreted is "line by line," isn't Python slow?</summary>
+    <div class="qa-body"><p>For raw number-crunching, yes — Python is slower than a compiled language like C. But it has a clever trick: libraries like <b>pandas</b> are written in fast, pre-compiled code under the hood. So when you call <code class="inline">df["Revenue"].sum()</code>, the heavy lifting runs at near-C speed while you still get Python's easy, interactive style. You get the best of both: convenience to write, speed where it counts.</p></div></details>
+
+    <div class="challenge"><span class="lab">🧠 Think it through</span>
+    <p>You define <code class="inline">x = 10</code> in cell 3, then <i>delete cell 3 from the page</i>. Can you still use <code class="inline">x</code> in cell 4?</p>
+    <details class="sol"><summary>Reveal</summary><p>Yes — until you restart. Deleting a cell removes the <i>text</i>, but the value is already sitting in the kernel's memory. This mismatch (code gone, value still alive) is the single biggest source of "but it worked a second ago" confusion. Restarting is how you force the memory to match the page.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BLOCK 1 ===================== -->
+<section id="b1">
+  <span class="blocktag">Block 1</span>
+  <h2 class="bh">Variables &amp; types</h2>
+  <div class="time">⏱ 20 min · Goal: store values, know the basic types, see results</div>
+  <div class="goal"><b>A variable is a labeled box.</b> You put a value in it and use the label later.</div>
+
+  <p>The <code class="inline">=</code> sign means "store the value on the right in the name on the left."</p>
+  <div class="codewrap"><pre><code class="language-python">revenue = 5000
+product = "Coffee Mug"
+units   = 120
+print(product, revenue, units)</code></pre></div>
+  <span class="out">Coffee Mug 5000 120</span>
+
+  <h3>The four everyday types</h3>
+  <ul>
+    <li><b>int</b> — whole numbers: <code class="inline">units = 120</code></li>
+    <li><b>float</b> — decimals: <code class="inline">price = 12.99</code></li>
+    <li><b>str</b> (string) — text, always in quotes: <code class="inline">product = "Coffee Mug"</code></li>
+    <li><b>bool</b> — true/false: <code class="inline">is_returned = False</code></li>
+  </ul>
+  <p>Check a type with <code class="inline">type()</code>:</p>
+  <div class="codewrap"><pre><code class="language-python">price = 12.99
+print(type(price))</code></pre></div>
+  <span class="out">&lt;class 'float'&gt;</span>
+
+  <h3>Printing a real sentence with f-strings</h3>
+  <p>Put an <code class="inline">f</code> before the quotes, then drop variables inside <code class="inline">{ }</code>:</p>
+  <div class="codewrap"><pre><code class="language-python">product = "Coffee Mug"
+price = 12.99
+print(f"The {product} sells for ${price}.")</code></pre></div>
+  <span class="out">The Coffee Mug sells for $12.99.</span>
+
+  <div class="callout biz"><span class="lab">📊 Business angle</span>
+  <p>Think of variables as named cells in a spreadsheet. Instead of <code class="inline">=B2*C2</code>, you write <code class="inline">total = price * units</code> — and the name tells you what it means.</p></div>
+
+  <div class="callout watch"><span class="lab">⚠ Watch out — three classic errors</span>
+  <p><b>Forgot quotes:</b> <code class="inline">product = Coffee Mug</code> → <code class="inline">SyntaxError</code>. Text needs quotes.<br>
+  <b>Typo in a name:</b> using <code class="inline">product</code> → <code class="inline">NameError: name 'product' is not defined</code>.<br>
+  <b>Mixing text and numbers:</b> <code class="inline">"5" + 5</code> → <code class="inline">TypeError</code>. A number in quotes is text, not a number.</p></div>
+
+  <div class="ex"><span class="lab">✍ Your turn</span>
+  <p>Store a <code class="inline">price</code> and a <code class="inline">quantity</code>, then print one sentence with the total amount.</p>
+  <details class="sol"><summary>Show a solution</summary>
+  <div class="codewrap"><pre><code class="language-python">price = 8.50
+quantity = 7
+total = price * quantity
+print(f"Order total: ${total}")</code></pre></div>
+  <span class="out">Order total: $59.5</span>
+  </details>
+  <p class="stretch"><b>Stretch:</b> round the total to 2 decimals with <code class="inline">round(total, 2)</code>.</p>
+  </div>
+
+  <div class="faq">
+    <h3 class="faqh">❓ Questions &amp; challenges</h3>
+
+    <details class="qa"><summary>What happens when I do "5" + "5"?</summary>
+    <div class="qa-body"><p>You get <code class="inline">"55"</code>, not <code class="inline">10</code>. For strings, <code class="inline">+</code> means "glue together" (concatenate), not add. Both <code class="inline">"5"</code>s are text. To add them as numbers, convert first: <code class="inline">int("5") + int("5")</code> → <code class="inline">10</code>.</p></div></details>
+
+    <details class="qa"><summary>Why is "5" + 5 an error, but "5" + "5" is fine?</summary>
+    <div class="qa-body"><p><code class="inline">+</code> only works between two of the <i>same</i> kind: two strings glue, two numbers add. One of each and Python refuses to guess what you meant — that's the <code class="inline">TypeError</code>. It would rather complain than silently make the wrong choice.</p></div></details>
+
+    <details class="qa"><summary>Can I change the type of a value? (casting)</summary>
+    <div class="qa-body"><p>Yes. <code class="inline">int("5")</code> → <code class="inline">5</code>, <code class="inline">str(5)</code> → <code class="inline">"5"</code>, <code class="inline">float("3.14")</code> → <code class="inline">3.14</code>. You're not editing the original — you're producing a <i>new</i> value of the new type. This matters constantly because data read from files or typed by a user usually arrives as text.</p></div></details>
+
+    <details class="qa"><summary>How do I take input from a user?</summary>
+    <div class="qa-body"><p><code class="inline">input()</code> shows a prompt and returns whatever is typed — <b>always as a string</b>, even if they type digits:</p>
+    <div class="codewrap"><pre><code class="language-python">age = input("Your age? ")   # returns text, e.g. "25"
+age = int(age)              # convert before doing math
+print(age + 1)</code></pre></div>
+    <p>In real business work you'll usually read data from a file rather than type it in, but <code class="inline">input()</code> is handy while learning.</p></div></details>
+
+    <div class="challenge"><span class="lab">🧠 Think it through</span>
+    <p>A quantity arrives from a spreadsheet as the text <code class="inline">"120"</code>. A teammate writes <code class="inline">total = "120" * 3</code> expecting 360. What do they actually get — and why?</p>
+    <details class="sol"><summary>Reveal</summary><p>They get <code class="inline">"120120120"</code>. With a string, <code class="inline">* 3</code> means "repeat this text 3 times," not "multiply." Python didn't error because string × integer <i>is</i> a valid operation — just not the one they wanted. The fix: convert first, <code class="inline">int("120") * 3</code>. Lesson: an operation running without an error doesn't prove it did the right thing. Always sanity-check the <i>type</i> of data coming in.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BLOCK 2 · OPERATIONS ===================== -->
+<section id="bop">
+  <span class="blocktag">Block 2</span>
+  <h2 class="bh">Operators &amp; operations</h2>
+  <div class="time">⏱ ~15 min · Goal: do arithmetic correctly, and combine yes/no conditions</div>
+  <div class="goal">Operators are the verbs of Python — they take values and produce a new value. Two families today: <b>arithmetic</b> (numbers) and <b>logic</b> (true/false).</div>
+
+  <h3>Arithmetic operators</h3>
+  <div class="codewrap"><pre><code class="language-python">print(10 + 3)    # 13   add
+print(10 - 3)    # 7    subtract
+print(10 * 3)    # 30   multiply
+print(10 / 3)    # 3.333...  divide (always gives a decimal)
+print(10 ** 2)   # 100  power (10 squared)</code></pre></div>
+
+  <h3>Two you may not have met: // and %</h3>
+  <p><code class="inline">//</code> is <b>floor division</b> — divide and throw away the remainder (whole units only). <code class="inline">%</code> is <b>modulus</b> — give back <i>only</i> the remainder.</p>
+  <div class="codewrap"><pre><code class="language-python">print(17 // 5)   # 3   -> 17 splits into 3 whole 5s
+print(17 % 5)    # 2   -> with 2 left over</code></pre></div>
+  <span class="out">3 · 2</span>
+
+  <div class="callout biz"><span class="lab">📊 Business angle</span>
+  <p>Shipping 17 items in boxes of 5? <code class="inline">17 // 5</code> = 3 full boxes, <code class="inline">17 % 5</code> = 2 items left for a partial box. <code class="inline">%</code> is also the standard way to test "is this even?" — <code class="inline">n % 2 == 0</code> is <code class="inline">True</code> for even numbers.</p></div>
+
+  <h3>Order of operations (BODMAS)</h3>
+  <p>Python doesn't read strictly left-to-right. It follows the same precedence you learned in maths — <b>B</b>rackets, <b>O</b>rders (powers), <b>D</b>ivision/<b>M</b>ultiplication, then <b>A</b>ddition/<b>S</b>ubtraction:</p>
+  <div class="codewrap"><pre><code class="language-python">print(10 + 5 * 2)      # 20, not 30  -> the * happens first
+print((10 + 5) * 2)    # 30          -> brackets force the + first
+print(100 - 20 / 4)    # 95.0        -> the / happens before the -
+print(2 ** 3 + 1)      # 9           -> power first, then add</code></pre></div>
+
+  <div class="callout biz"><span class="lab">📊 Business angle</span>
+  <p>This is exactly why a spreadsheet formula like <code class="inline">=A1+A2*0.1</code> can surprise you. When in doubt, add brackets — they cost nothing and make your intent obvious: <code class="inline">price + (price * tax_rate)</code>.</p></div>
+
+  <h3>Comparison operators → True / False</h3>
+  <p>These ask a yes/no question and hand back a <b>boolean</b>:</p>
+  <div class="codewrap"><pre><code class="language-python">print(500 > 300)    # True
+print(200 == 200)   # True   (two equals = "is equal to?")
+print(150 != 150)   # False  ("is not equal to?")
+print(10 <= 9)      # False</code></pre></div>
+
+  <h3>Logic gates: and / or / not</h3>
+  <p>"Logic gates" are how you <b>combine</b> several true/false conditions into one decision. Python uses plain words:</p>
+  <ul>
+    <li><code class="inline">and</code> — true only if <b>both</b> sides are true</li>
+    <li><code class="inline">or</code> — true if <b>at least one</b> side is true</li>
+    <li><code class="inline">not</code> — flips true to false and back</li>
+  </ul>
+  <div class="codewrap"><pre><code class="language-python">revenue = 800
+returned = False
+
+print(revenue > 500 and returned == False)   # True  (both hold)
+print(revenue > 1000 or revenue > 500)        # True  (one holds)
+print(not returned)                           # True  (flip False)</code></pre></div>
+  <span class="out">True · True · True</span>
+
+  <p>A quick truth table to keep handy:</p>
+  <table class="cheat">
+    <tr><th>A</th><th>B</th><th>A and B</th><th>A or B</th><th>not A</th></tr>
+    <tr><td>True</td><td>True</td><td>True</td><td>True</td><td>False</td></tr>
+    <tr><td>True</td><td>False</td><td>False</td><td>True</td><td>False</td></tr>
+    <tr><td>False</td><td>True</td><td>False</td><td>True</td><td>True</td></tr>
+    <tr><td>False</td><td>False</td><td>False</td><td>False</td><td>True</td></tr>
+  </table>
+
+  <div class="callout biz"><span class="lab">📊 Business angle</span>
+  <p>Real rules are layered: "flag the order if it's <b>over $500</b> <code class="inline">and</code> <b>not already returned</b>." Each condition is a comparison; <code class="inline">and</code>/<code class="inline">or</code> stitch them into one test you can drop straight into an <code class="inline">if</code> (next block but one).</p></div>
+
+  <div class="ex"><span class="lab">✍ Your turn</span>
+  <p>A customer qualifies for free shipping if their order is <b>$50 or more</b> <code class="inline">or</code> they are a <b>member</b>. Set <code class="inline">total</code> and <code class="inline">is_member</code>, then print whether they qualify.</p>
+  <details class="sol"><summary>Show a solution</summary>
+  <div class="codewrap"><pre><code class="language-python">total = 40
+is_member = True
+print(total >= 50 or is_member)</code></pre></div>
+  <span class="out">True</span>
+  </details>
+  <p class="stretch"><b>Stretch:</b> add a rule that members <i>also</i> need <code class="inline">total &gt; 0</code> — use <code class="inline">and</code> inside brackets.</p>
+  </div>
+
+  <div class="faq">
+    <h3 class="faqh">❓ Questions &amp; challenges</h3>
+
+    <details class="qa"><summary>When do I use / vs // ?</summary>
+    <div class="qa-body"><p><code class="inline">/</code> always gives a decimal (<code class="inline">10 / 4</code> → <code class="inline">2.5</code>), even when it divides evenly (<code class="inline">8 / 2</code> → <code class="inline">4.0</code>). <code class="inline">//</code> gives the whole-number part only (<code class="inline">10 // 4</code> → <code class="inline">2</code>). Use <code class="inline">//</code> when a fraction makes no sense — number of full boxes, complete months, whole tables of guests.</p></div></details>
+
+    <details class="qa"><summary>What's the real-world use of modulus (%)?</summary>
+    <div class="qa-body"><p>The two big ones: testing divisibility (<code class="inline">n % 2 == 0</code> → even; <code class="inline">n % 3 == 0</code> → every third) and "wrapping around" (<code class="inline">hour % 12</code>, day-of-week cycles). In business data it's handy for "every Nth row," splitting into groups, or pulling cents from a total in pence.</p></div></details>
+
+    <details class="qa"><summary>Is and/or the same as &amp; / | I've seen elsewhere?</summary>
+    <div class="qa-body"><p>For plain true/false logic in Python, use the words <code class="inline">and</code> / <code class="inline">or</code> / <code class="inline">not</code> — they read clearly and are correct. The symbols <code class="inline">&amp;</code> <code class="inline">|</code> <code class="inline">~</code> do a lower-level, value-by-value version. You'll meet them again in <b>pandas</b>, where filtering a whole column <i>requires</i> <code class="inline">&amp;</code> and <code class="inline">|</code> (with each condition in brackets) — but for everyday <code class="inline">if</code> statements, stick to the words.</p></div></details>
+
+    <div class="challenge"><span class="lab">🧠 Think it through</span>
+    <p>Without running it, what does each line give — and why are they different?</p>
+    <div class="codewrap"><pre><code class="language-python">print(2 + 3 * 4 ** 2)
+print((2 + 3) * 4 ** 2)
+print(((2 + 3) * 4) ** 2)</code></pre></div>
+    <details class="sol"><summary>Reveal</summary><p>Line 1 = <code class="inline">50</code>: power first (<code class="inline">4**2 = 16</code>), then <code class="inline">3*16 = 48</code>, then <code class="inline">+2</code>. Line 2 = <code class="inline">80</code>: brackets force <code class="inline">2+3 = 5</code>, but the power still beats the multiply, so <code class="inline">5 * 16</code>. Line 3 = <code class="inline">400</code>: the inner brackets make <code class="inline">5 * 4 = 20</code> happen first, <i>then</i> square it. Same four numbers, three answers — precedence and brackets decide everything. The business lesson: never trust a chained formula at a glance; bracket it so a colleague reads it the way you meant it.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BLOCK 3 ===================== -->
+<section id="b2">
+  <span class="blocktag">Block 3</span>
+  <h2 class="bh">Lists &amp; dictionaries</h2>
+  <div class="time">⏱ 20 min · Goal: hold many values, and look things up by name</div>
+  <div class="goal">A <b>list</b> is a column of values in order. A <b>dictionary</b> is a labeled lookup.</div>
+
+  <h3>Lists — an ordered column</h3>
+  <div class="codewrap"><pre><code class="language-python">sales = [200, 450, 130, 600]
+print(sales[0])      # first item — counting starts at 0
+print(len(sales))    # how many items
+print(sum(sales))    # add them all up
+sales.append(310)    # add a new value to the end
+print(sales)</code></pre></div>
+  <span class="out">200 · 4 · 1380 · [200, 450, 130, 600, 310]</span>
+
+  <div class="callout biz"><span class="lab">📊 Business angle</span>
+  <p>A list is one column of your spreadsheet — say, daily sales. <code class="inline">sum()</code> is your column total, <code class="inline">len()</code> is the row count.</p></div>
+
+  <h3>Dictionaries — look up a value by its name</h3>
+  <div class="codewrap"><pre><code class="language-python">prices = {"mug": 12, "shirt": 25, "sticker": 3}
+print(prices["shirt"])     # look up by key
+prices["hat"] = 18         # add a new entry
+print(prices)</code></pre></div>
+  <span class="out">25 · {'mug': 12, 'shirt': 25, 'sticker': 3, 'hat': 18}</span>
+
+  <p><b>Which do I use?</b> A <b>list</b> when order/sequence matters (sales over time). A <b>dictionary</b> when you want to look something up by a label (price of a product).</p>
+
+  <div class="callout watch"><span class="lab">⚠ Watch out</span>
+  <p>The first item is <code class="inline">sales[0]</code>, not <code class="inline">sales[1]</code>. Asking for <code class="inline">sales[4]</code> on a 4-item list → <code class="inline">IndexError</code>. Asking a dict for a key that isn't there → <code class="inline">KeyError</code>.</p></div>
+
+  <div class="ex"><span class="lab">✍ Your turn</span>
+  <p>Make a list of 5 daily sales numbers. Print the first day, the last day, and the week's total.</p>
+  <details class="sol"><summary>Show a solution</summary>
+  <div class="codewrap"><pre><code class="language-python">sales = [200, 450, 130, 600, 310]
+print(f"First day: {sales[0]}")
+print(f"Last day:  {sales[-1]}")   # -1 means 'last'
+print(f"Week total: {sum(sales)}")</code></pre></div>
+  <span class="out">First day: 200 · Last day: 310 · Week total: 1690</span>
+  </details>
+  <p class="stretch"><b>Stretch:</b> print the average — <code class="inline">sum(sales) / len(sales)</code>.</p>
+  </div>
+
+  <div class="faq">
+    <h3 class="faqh">❓ Questions &amp; challenges</h3>
+
+    <details class="qa"><summary>Where did len(), sum(), and append() come from? I never defined them.</summary>
+    <div class="qa-body"><p>They ship with Python — you didn't write them, but they're always available. <code class="inline">len()</code> and <code class="inline">sum()</code> are <b>built-in functions</b>. <code class="inline">append()</code> is a little different: it's a <b>method</b> that belongs to lists, which is why you call it <i>on</i> a list with a dot — <code class="inline">sales.append(5)</code> — rather than <code class="inline">append(sales, 5)</code>.</p></div></details>
+
+    <details class="qa"><summary>Function vs method — what's the actual difference?</summary>
+    <div class="qa-body"><p>A <b>function</b> stands on its own: <code class="inline">len(sales)</code>. A <b>method</b> is attached to an object and called with a dot: <code class="inline">sales.append(5)</code>. Same core idea (inputs → action or result), different grammar. A method can see and change the thing it's attached to, which is why <code class="inline">sales.append(5)</code> modifies <code class="inline">sales</code> directly. Rule of thumb: <code class="inline">name(stuff)</code> = function; <code class="inline">thing.name(stuff)</code> = method.</p></div></details>
+
+    <details class="qa"><summary>Why don't len() and sum() work on a single value, like sum(5)?</summary>
+    <div class="qa-body"><p>Because they're designed to work over a <i>collection</i>. <code class="inline">sum</code> needs several things to add together; <code class="inline">len</code> needs items to count. A lone <code class="inline">5</code> is not a collection — there's nothing to iterate over — so you get a <code class="inline">TypeError</code>. Wrap it in a list and it works: <code class="inline">sum([5])</code> → <code class="inline">5</code>.</p></div></details>
+
+    <details class="qa"><summary>What's the difference between a list and a tuple?</summary>
+    <div class="qa-body"><p>A <b>list</b> uses <code class="inline">[ ]</code> and can be changed — add, remove, edit. A <b>tuple</b> uses <code class="inline">( )</code> and is locked once created: you can read it but not change it. Use a tuple for things that shouldn't move (a fixed pair like <code class="inline">(latitude, longitude)</code> or a row that represents one record); use a list for collections you intend to modify.</p></div></details>
+
+    <details class="qa"><summary>What does sales[1:3] mean? (slicing)</summary>
+    <div class="qa-body"><p>A slice grabs a <i>range</i> of items, <code class="inline">list[start:stop]</code> — and <b>stop is not included</b>:</p>
+    <div class="codewrap"><pre><code class="language-python">sales = [200, 450, 130, 600, 310]
+sales[1:3]   # [450, 130]  -> positions 1 and 2, not 3
+sales[:2]    # [200, 450]  -> from the start
+sales[2:]    # [130, 600, 310]  -> to the end
+sales[-1]    # 310  -> the last item</code></pre></div></div></details>
+
+    <details class="qa"><summary>What can and can't I put inside the square brackets?</summary>
+    <div class="qa-body"><p>It depends on what's in front of them. After a <b>list</b>, brackets mean "which position(s)": a number (<code class="inline">sales[0]</code>), a slice (<code class="inline">sales[1:3]</code>), or a negative index (<code class="inline">sales[-1]</code>). After a <b>dictionary</b>, brackets mean "which key": <code class="inline">prices["mug"]</code>. Put a key into a list, or a position into a dict, and you get <code class="inline">IndexError</code> / <code class="inline">KeyError</code>. You can't put a calculation that produces text where a position is expected.</p></div></details>
+
+    <details class="qa"><summary>Can I do prices[1, "shirt"] — two things in the brackets?</summary>
+    <div class="qa-body"><p>Not with a plain list or dictionary — they expect a single position or key, so that comma is meaningless to them. But <b>pandas</b> (the data-table library, Block 5) <i>does</i> use it: <code class="inline">df.loc[1, "Revenue"]</code> means "row 1, column Revenue." The comma separates two axes — rows, then columns. That's a pandas feature, not core Python.</p></div></details>
+
+    <details class="qa"><summary>How does range() work?</summary>
+    <div class="qa-body"><p>It produces a sequence of numbers, again with the end <i>excluded</i>:</p>
+    <div class="codewrap"><pre><code class="language-python">range(5)        # 0, 1, 2, 3, 4
+range(2, 6)     # 2, 3, 4, 5
+range(0, 10, 2) # 0, 2, 4, 6, 8  (step of 2)</code></pre></div>
+    <p>It's mostly used to repeat something a set number of times: <code class="inline">for i in range(5):</code>. We'll use it in the next block.</p></div></details>
+
+    <div class="challenge"><span class="lab">🧠 Think it through</span>
+    <p>Two-parter. (a) What does <code class="inline">sales[2:2]</code> return? (b) Your colleague stores a product record as <code class="inline">record = ("Mug", 12)</code> then tries <code class="inline">record[1] = 15</code> to update the price. What happens, and what should they have used instead?</p>
+    <details class="sol"><summary>Reveal</summary><p>(a) An <b>empty list</b> <code class="inline">[]</code> — when start equals stop there's nothing between them. (b) <code class="inline">record[1] = 15</code> raises a <code class="inline">TypeError</code>: a tuple is locked, you can't reassign its items. If the price needs to change, the record should have been a <i>list</i> <code class="inline">["Mug", 12]</code> — or, better for real data, a dictionary <code class="inline">{"product": "Mug", "price": 12}</code> so the fields have names. The deeper point: choosing list vs tuple vs dict is a design decision about whether the data should change and how you'll look it up.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BLOCK 3 ===================== -->
+<section id="b3">
+  <span class="blocktag">Block 4 · core</span>
+  <h2 class="bh">Logic &amp; loops</h2>
+  <div class="time">⏱ 25 min · Goal: make decisions and repeat work — what makes code more than a calculator</div>
+
+  <h3>Comparisons</h3>
+  <p>These ask a yes/no question and give back <code class="inline">True</code> or <code class="inline">False</code>:</p>
+  <div class="codewrap"><pre><code class="language-python">print(500 > 300)     # greater than
+print(200 == 200)    # equal? (two equals signs!)
+print(150 != 150)    # not equal?</code></pre></div>
+  <span class="out">True · True · False</span>
+
+  <div class="callout watch"><span class="lab">⚠ Watch out — the #1 beginner trap</span>
+  <p><code class="inline">=</code> <b>stores</b> a value. <code class="inline">==</code> <b>compares</b> two values. <code class="inline">x = 5</code> puts 5 in x; <code class="inline">x == 5</code> asks "is x equal to 5?"</p></div>
+
+  <h3>Making decisions with if / elif / else</h3>
+  <div class="codewrap"><pre><code class="language-python">amount = 420
+
+if amount >= 500:
+    print("Large order")
+elif amount >= 200:
+    print("Medium order")
+else:
+    print("Small order")</code></pre></div>
+  <span class="out">Medium order</span>
+
+  <div class="callout watch"><span class="lab">⚠ Watch out — indentation is not decoration</span>
+  <p>Python uses the <b>spaces</b> at the start of a line to know what's "inside" the <code class="inline">if</code>. Forget them and you get <code class="inline">IndentationError</code>. Colab indents for you after the colon <code class="inline">:</code> — let it.</p></div>
+
+  <h3>Repeating work with a for loop</h3>
+  <p>A loop runs the same code once for each item in a list:</p>
+  <div class="codewrap"><pre><code class="language-python">orders = [150, 620, 90, 540, 300]
+
+large_count = 0
+for amount in orders:
+    if amount >= 500:
+        large_count = large_count + 1
+
+print(f"Large orders: {large_count}")</code></pre></div>
+  <span class="out">Large orders: 2</span>
+
+  <div class="callout biz"><span class="lab">📊 Business angle</span>
+  <p>A loop is "go down the column and do this to every row." Counting large orders, flagging late shipments, summing a column — all the same pattern.</p></div>
+
+  <h3>The other loop: while</h3>
+  <p>A <code class="inline">for</code> loop runs <b>once per item</b> in a known collection. A <code class="inline">while</code> loop runs <b>as long as a condition stays true</b> — you don't say how many times up front:</p>
+  <div class="codewrap"><pre><code class="language-python">balance = 1000
+months = 0
+while balance > 0:        # keep going until the money runs out
+    balance = balance - 300
+    months = months + 1
+print(f"Funds last {months} months")</code></pre></div>
+  <span class="out">Funds last 4 months</span>
+
+  <p><b>When is each more suitable?</b></p>
+  <table class="cheat">
+    <tr><th>Use a <code>for</code> loop when…</th><th>Use a <code>while</code> loop when…</th></tr>
+    <tr><td>You're walking through a known list/table (every order, every row)</td><td>You repeat until something happens, and don't know the count ahead of time</td></tr>
+    <tr><td>The number of repeats is fixed (<code>range(12)</code> for 12 months)</td><td>"Keep drawing down the budget until it hits zero"</td></tr>
+    <tr><td>99% of business data work — you have data to iterate over</td><td>Simulations, retrying until success, "grow until target reached"</td></tr>
+  </table>
+
+  <div class="callout watch"><span class="lab">⚠ Watch out — the infinite loop</span>
+  <p>A <code class="inline">while</code> loop only stops when its condition becomes false, so <b>something inside must move it toward false</b>. Forget to change <code class="inline">balance</code> and it loops forever. If a cell hangs, press the stop button or <code class="inline">Runtime → Interrupt</code>.</p></div>
+
+  <div class="ex"><span class="lab">✍ Your turn</span>
+  <p>Given a list of order amounts, loop through and print <code class="inline">"FLAG"</code> next to any order over $500.</p>
+  <details class="sol"><summary>Show a solution</summary>
+  <div class="codewrap"><pre><code class="language-python">orders = [150, 620, 90, 540, 300]
+for amount in orders:
+    if amount > 500:
+        print(amount, "FLAG")
+    else:
+        print(amount)</code></pre></div>
+  <span class="out">150 · 620 FLAG · 90 · 540 FLAG · 300</span>
+  </details>
+  <p class="stretch"><b>Stretch:</b> also keep a running <code class="inline">total</code> of just the flagged orders.</p>
+  </div>
+
+  <div class="faq">
+    <h3 class="faqh">❓ Questions &amp; challenges</h3>
+
+    <details class="qa"><summary>Why two equals signs (==) instead of one?</summary>
+    <div class="qa-body"><p>One <code class="inline">=</code> <b>stores</b> a value (<code class="inline">x = 5</code> puts 5 into x). Two <code class="inline">==</code> <b>ask a question</b> (<code class="inline">x == 5</code> means "is x equal to 5?"). Keeping them separate stops "set this" and "compare this" from being confused — but writing <code class="inline">=</code> where you meant <code class="inline">==</code> is a classic bug.</p></div></details>
+
+    <details class="qa"><summary>How do I repeat something a fixed number of times instead of walking a list?</summary>
+    <div class="qa-body"><p>Loop over <code class="inline">range()</code>:</p>
+    <div class="codewrap"><pre><code class="language-python">for i in range(3):
+    print("Reminder", i)   # i is 0, then 1, then 2</code></pre></div>
+    <p>Use <code class="inline">for x in sales:</code> when you want each <i>item</i>; use <code class="inline">range()</code> when you just want to repeat by <i>count</i>.</p></div></details>
+
+    <details class="qa"><summary>Can I loop over a dictionary?</summary>
+    <div class="qa-body"><p>Yes. <code class="inline">for key in prices:</code> gives you each key, and <code class="inline">prices[key]</code> gets its value. To get both at once:</p>
+    <div class="codewrap"><pre><code class="language-python">for product, price in prices.items():
+    print(product, "costs", price)</code></pre></div></div></details>
+
+    <div class="challenge"><span class="lab">🧠 Think it through</span>
+    <p>This loop is supposed to count orders over $500, but it always prints <code class="inline">1</code>. Spot the bug before reading on.</p>
+    <div class="codewrap"><pre><code class="language-python">orders = [620, 150, 540, 900]
+for amount in orders:
+    large_count = 0
+    if amount > 500:
+        large_count = large_count + 1
+print(large_count)</code></pre></div>
+    <details class="sol"><summary>Reveal</summary><p><code class="inline">large_count = 0</code> sits <i>inside</i> the loop, so it resets to zero on every pass — the count can never climb past 1. The counter must be created <b>once, before</b> the loop, so it survives across iterations. This is a pure indentation/placement bug, and reasoning about "what runs how many times" is exactly the skill that separates copying code from understanding it.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BLOCK 4 ===================== -->
+<section id="b4">
+  <span class="blocktag">Block 5</span>
+  <h2 class="bh">Functions</h2>
+  <div class="time">⏱ 15 min · Goal: reuse logic, and understand the function calls you already see everywhere</div>
+  <div class="goal">A <b>function</b> is a named machine: inputs go in, a result comes out.</div>
+
+  <p>You've been using functions all along — <code class="inline">print()</code>, <code class="inline">len()</code>, <code class="inline">sum()</code>, <code class="inline">round()</code>, <code class="inline">max()</code>, <code class="inline">min()</code> are all built in:</p>
+  <div class="codewrap"><pre><code class="language-python">sales = [200, 450, 130, 600]
+print(max(sales))      # biggest
+print(min(sales))      # smallest
+print(round(sum(sales) / len(sales), 1))   # average, 1 decimal</code></pre></div>
+  <span class="out">600 · 130 · 345.0</span>
+
+  <h3>Write your own with def</h3>
+  <div class="codewrap"><pre><code class="language-python">def with_tax(price, rate=0.1):
+    return price * (1 + rate)
+
+print(with_tax(100))        # uses default 10%
+print(with_tax(100, 0.2))   # override to 20%</code></pre></div>
+  <span class="out">110.0 · 120.0</span>
+
+  <p><b>Why bother:</b> name a calculation once and reuse it everywhere. If the rule changes, you fix it in one place instead of twenty.</p>
+
+  <div class="callout watch"><span class="lab">⚠ Watch out — print vs return</span>
+  <p><code class="inline">print</code> shows something on screen for a human. <code class="inline">return</code> hands a value back so your code can keep using it. A function that only prints can't be used in a calculation later.</p></div>
+
+  <div class="ex"><span class="lab">✍ Your turn</span>
+  <p>Write a function <code class="inline">is_profitable(revenue, cost)</code> that returns <code class="inline">True</code> when revenue beats cost.</p>
+  <details class="sol"><summary>Show a solution</summary>
+  <div class="codewrap"><pre><code class="language-python">def is_profitable(revenue, cost):
+    return revenue > cost
+
+print(is_profitable(500, 300))
+print(is_profitable(200, 250))</code></pre></div>
+  <span class="out">True · False</span>
+  </details>
+  <p class="stretch"><b>Stretch:</b> return the profit margin instead — <code class="inline">(revenue - cost) / revenue</code>.</p>
+  </div>
+
+  <div class="faq">
+    <h3 class="faqh">❓ Questions &amp; challenges</h3>
+
+    <details class="qa"><summary>When I write df.head(), is that a function or a method?</summary>
+    <div class="qa-body"><p>A <b>method</b> — it belongs to the DataFrame <code class="inline">df</code> and is called with a dot. <code class="inline">print()</code> is a <b>function</b>; it stands alone. Most pandas operations are methods because they act on one specific table. (Same distinction as <code class="inline">sales.append()</code> back in Block 2.)</p></div></details>
+
+    <details class="qa"><summary>What does rate=0.1 in the definition mean?</summary>
+    <div class="qa-body"><p>It's a <b>default value</b>. If the caller doesn't supply <code class="inline">rate</code>, it falls back to <code class="inline">0.1</code>. That's why <code class="inline">with_tax(100)</code> works with no second value, while <code class="inline">with_tax(100, 0.2)</code> overrides it.</p></div></details>
+
+    <details class="qa"><summary>Argument vs parameter — are they the same thing?</summary>
+    <div class="qa-body"><p>Almost, and people use them loosely, but: in <code class="inline">def with_tax(price, rate):</code> the names <code class="inline">price</code> and <code class="inline">rate</code> are <b>parameters</b> (the placeholders). In the call <code class="inline">with_tax(100, 0.2)</code> the values <code class="inline">100</code> and <code class="inline">0.2</code> are <b>arguments</b> (the real inputs). Knowing this makes error messages like "missing 1 required positional argument" readable.</p></div></details>
+
+    <details class="qa"><summary>What if my function has no return?</summary>
+    <div class="qa-body"><p>It hands back <code class="inline">None</code> — Python's word for "nothing." A function that only <code class="inline">print</code>s returns <code class="inline">None</code>, so <code class="inline">x = my_function()</code> leaves <code class="inline">x</code> empty. If you want to <i>use</i> the result later, you must <code class="inline">return</code> it.</p></div></details>
+
+    <div class="challenge"><span class="lab">🧠 Think it through</span>
+    <p>What does this print, and why?</p>
+    <div class="codewrap"><pre><code class="language-python">def add(a, b):
+    a + b
+
+result = add(2, 3)
+print(result)</code></pre></div>
+    <details class="sol"><summary>Reveal</summary><p>It prints <code class="inline">None</code>. The function computes <code class="inline">a + b</code> but never <code class="inline">return</code>s it, so the result is calculated and immediately thrown away. <code class="inline">add(2, 3)</code> hands back <code class="inline">None</code>, and that's what lands in <code class="inline">result</code>. Forgetting <code class="inline">return</code> — and confusing it with <code class="inline">print</code> — is one of the most common beginner bugs. Fix: <code class="inline">return a + b</code>.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BLOCK 5 ===================== -->
+<section id="b5">
+  <span class="blocktag">Block 6 · the payoff</span>
+  <h2 class="bh">A taste of pandas</h2>
+  <div class="time">⏱ 20 min · Goal: everything so far, but on real data — "Excel, in code"</div>
+
+  <p><b>pandas</b> is the library for working with tables of data. A table is called a <b>DataFrame</b>. Load one from a CSV file:</p>
+  <div class="codewrap"><pre><code class="language-python">import pandas as pd
+
+df = pd.read_csv("orders.csv")
+df.head()       # show the first 5 rows</code></pre></div>
+
+  <div class="callout biz"><span class="lab">📊 Try it on a real public dataset — no download</span>
+  <p><code class="inline">read_csv</code> happily takes a <b>web link</b>, so you can showcase pandas on real data with one line. This supermarket sales dataset is ideal for a business class — invoices with branch, city, product line, unit price, quantity, total, cost of goods sold, and gross income (1,000 rows):</p>
+  <div class="codewrap"><pre><code class="language-python">import pandas as pd
+
+url = "https://raw.githubusercontent.com/plotly/datasets/master/supermarket_Sales.csv"
+df = pd.read_csv(url)
+df.head()</code></pre></div>
+  <p>Now everything in this block works on it — try <code class="inline">df.groupby("Product line")["Total"].sum()</code>, <code class="inline">df["City"].value_counts()</code>, or <code class="inline">df.groupby("Branch")["Gross income"].mean()</code>. (Column names map onto our examples: <code class="inline">Total</code> ≈ revenue, <code class="inline">Cost of goods sold</code> ≈ cost, <code class="inline">City</code>/<code class="inline">Branch</code> ≈ region.)</p>
+  <p style="margin-bottom:0">Prefer something tiny and clean? The classic restaurant-tips dataset (244 rows: <code class="inline">total_bill</code>, <code class="inline">tip</code>, <code class="inline">day</code>, <code class="inline">size</code>) is just as easy:<br>
+  <code class="inline">pd.read_csv("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv")</code></p></div>
+
+  <h3>display() vs print() — why your table sometimes looks ugly</h3>
+  <p>In Colab, whatever sits on the <b>last line</b> of a cell is shown automatically as a nicely formatted table. That's <code class="inline">display()</code> working behind the scenes. <code class="inline">print()</code> instead dumps a plain-text version — fine for numbers and words, but cramped for DataFrames.</p>
+  <div class="codewrap"><pre><code class="language-python">df.head()          # ✅ rich, aligned table (auto-displayed)
+display(df.head()) # ✅ same thing, and works mid-cell / in loops
+print(df.head())   # ⚠ plain monospaced text — harder to read</code></pre></div>
+  <ul>
+    <li>Showing <b>one</b> table? Just put it on the last line.</li>
+    <li>Showing <b>several</b> in one cell, or one from inside a loop/if? Use <code class="inline">display(...)</code> — only the last line auto-shows, so the others would otherwise be invisible.</li>
+    <li>Use <code class="inline">print()</code> for plain values and sentences (<code class="inline">print(f"Total: {total}")</code>), not for tables.</li>
+  </ul>
+
+  <h3>Look around the table</h3>
+  <div class="codewrap"><pre><code class="language-python">print(df.shape)      # (rows, columns)
+print(df.columns)    # the column names</code></pre></div>
+  <span class="out">(80, 7) · Index(['OrderID', 'Date', 'Region', 'Product', 'Quantity', 'Revenue', 'Cost'], ...)</span>
+
+  <h3>One column behaves like a list</h3>
+  <div class="codewrap"><pre><code class="language-python">df["Revenue"].sum()
+df["Revenue"].mean()
+df["Revenue"].max()</code></pre></div>
+
+  <div class="callout biz"><span class="lab">📊 Business angle</span>
+  <p><code class="inline">df["Revenue"]</code> is just a column — the same idea as the list from Block 2, with <code class="inline">.sum()</code> and <code class="inline">.mean()</code> built right in.</p></div>
+
+  <h3>Filter rows (this is Block 3's logic, applied to a whole table)</h3>
+  <div class="codewrap"><pre><code class="language-python"># keep only the big orders
+big = df[df["Revenue"] > 500]
+big.head()</code></pre></div>
+
+  <h3>Group and summarize — the moment it clicks</h3>
+  <div class="codewrap"><pre><code class="language-python"># total revenue per region
+df.groupby("Region")["Revenue"].sum()</code></pre></div>
+  <span class="out">a pivot-table-style total of revenue for each region</span>
+
+  <h3>More everyday pandas you'll reach for constantly</h3>
+  <p><b>Get a feel for the whole table fast:</b></p>
+  <div class="codewrap"><pre><code class="language-python">df.describe()    # count, mean, min, max, quartiles for every number column
+df.info()        # column names, types, and how many values are missing
+df.tail()        # the LAST 5 rows
+df.shape         # (rows, columns)</code></pre></div>
+
+  <p><b>Explore a single column:</b></p>
+  <div class="codewrap"><pre><code class="language-python">df["Region"].unique()        # the distinct values
+df["Region"].nunique()       # how many distinct values
+df["Region"].value_counts()  # count of rows per region — a quick tally</code></pre></div>
+
+  <p><b>Sort, and add a calculated column:</b></p>
+  <div class="codewrap"><pre><code class="language-python">df.sort_values("Revenue", ascending=False).head()  # biggest orders first
+
+# build a new column from existing ones (this is Block 1 maths, per row)
+df["Profit"] = df["Revenue"] - df["Cost"]
+df["Margin"] = df["Profit"] / df["Revenue"]</code></pre></div>
+
+  <p><b>Find and handle missing data</b> (real datasets always have gaps):</p>
+  <div class="codewrap"><pre><code class="language-python">df.isna().sum()          # how many blanks in each column
+df["Cost"].fillna(0)     # replace blanks with 0
+df.dropna()              # drop any row that has a blank</code></pre></div>
+
+  <div class="callout biz"><span class="lab">📊 Business angle</span>
+  <p>This handful — <code class="inline">describe</code>, <code class="inline">value_counts</code>, <code class="inline">sort_values</code>, a calculated column, and <code class="inline">groupby</code> — already covers most of what you'd do in a pivot table or a "quick look" in Excel, but it's repeatable and leaves an audit trail.</p></div>
+
+  <div class="ex"><span class="lab">✍ Your turn</span>
+  <p>Find the average order revenue, then show only the orders above that average.</p>
+  <details class="sol"><summary>Show a solution</summary>
+  <div class="codewrap"><pre><code class="language-python">avg = df["Revenue"].mean()
+above = df[df["Revenue"] > avg]
+print(f"Average revenue: {round(avg, 2)}")
+above.head()</code></pre></div>
+  </details>
+  <p class="stretch"><b>Stretch:</b> use <code class="inline">groupby("Product")</code> to find which product earns the most total revenue.</p>
+  </div>
+
+  <div class="faq">
+    <h3 class="faqh">❓ Questions &amp; challenges</h3>
+
+    <details class="qa"><summary>I wrote condition = df["Revenue" &gt; 500]. Why does it break?</summary>
+    <div class="qa-body"><p>Look at where the <code class="inline">&gt;</code> sits — it's <i>inside</i> the brackets. So Python first evaluates <code class="inline">"Revenue" &gt; 500</code>, i.e. compares the word "Revenue" to the number 500, before pandas ever sees it. The brackets should hold the <b>column</b>, and the comparison goes <b>outside</b>:</p>
+    <div class="codewrap"><pre><code class="language-python">condition = df["Revenue"] > 500   # column first, then compare
+big = df[condition]</code></pre></div>
+    <p>The one-liner <code class="inline">df[df["Revenue"] &gt; 500]</code> is exactly the same thing, just without naming the middle step.</p></div></details>
+
+    <details class="qa"><summary>So what actually is "condition"?</summary>
+    <div class="qa-body"><p>A column of <code class="inline">True</code>/<code class="inline">False</code> — one value per row, often called a <b>mask</b>. <code class="inline">df[condition]</code> keeps only the rows where it's <code class="inline">True</code>. It's Block 3's comparison, applied to every row at once instead of one value at a time.</p></div></details>
+
+    <details class="qa"><summary>Why does df["ages"] &gt; 30 work, but a plain list ages &gt; 30 doesn't?</summary>
+    <div class="qa-body"><p>A plain Python <b>list</b> is just a generic container. <code class="inline">ages &gt; 30</code> asks Python to compare the <i>whole list object</i> to the number 30 — and Python has no built-in meaning for "a list versus a number," so it raises a <code class="inline">TypeError</code>. The list won't look inside itself for you; you'd have to loop:</p>
+    <div class="codewrap"><pre><code class="language-python">ages = [25, 40, 30, 55]
+[a > 30 for a in ages]      # [False, True, False, True]</code></pre></div>
+    <p>A pandas column is a different kind of object — a <b>Series</b> — and its creators deliberately <i>defined</i> what <code class="inline">&gt; 30</code> means: "apply this to every element and hand back a new Series of True/False." That behaviour is called <b>vectorization</b>. It's the same reason <code class="inline">df["price"] * 1.1</code> bumps every price by 10%, while <code class="inline">[10, 20] * 1.1</code> would error.</p>
+    <p style="margin-bottom:0"><b>Rule of thumb:</b> a plain list needs a loop to act on every element; a pandas Series does it for you in one go. That auto-broadcasting is a big part of why pandas feels so much faster to write than raw Python.</p></div></details>
+
+    <details class="qa"><summary>I filtered for revenue over 500 — how do I get just the "Returns" column for those rows?</summary>
+    <div class="qa-body"><p>Filter the rows, then pick the column:</p>
+    <div class="codewrap"><pre><code class="language-python">big = df[df["Revenue"] > 500]
+big["Returns"]</code></pre></div>
+    <p>Or do both at once with <code class="inline">.loc</code>, which takes <code class="inline">[rows, columns]</code>:</p>
+    <div class="codewrap"><pre><code class="language-python">df.loc[df["Revenue"] > 500, "Returns"]</code></pre></div></div></details>
+
+    <details class="qa"><summary>That comma in .loc[rows, columns] — is it the prices[1, "shirt"] from Block 2?</summary>
+    <div class="qa-body"><p>Yes — this is where that idea pays off. pandas reads the brackets as two axes: rows first, then columns. <code class="inline">df.loc[2, "Revenue"]</code> is "the Revenue cell in row 2." Plain lists and dicts can't take two things in their brackets; pandas can, because a table has two dimensions.</p></div></details>
+
+    <details class="qa"><summary>What's the difference between df["Revenue"] and df[["Revenue", "Cost"]]?</summary>
+    <div class="qa-body"><p>Single brackets with one name give you <b>one column</b> (a Series). Double brackets — brackets around a <i>list</i> of names — give you a smaller <b>table</b> with just those columns. The inner <code class="inline">[ ]</code> is literally a list of column names, the same kind of list from Block 2.</p></div></details>
+
+    <details class="qa"><summary>How do I filter on two conditions at once? (and the &amp; / | surprise)</summary>
+    <div class="qa-body"><p>Here's the catch from the operations block: when filtering a whole column, pandas needs the symbols <code class="inline">&amp;</code> (and) and <code class="inline">|</code> (or), <b>not</b> the words — and each condition must be in its own brackets:</p>
+    <div class="codewrap"><pre><code class="language-python"># big orders in the North region
+df[(df["Revenue"] > 500) & (df["Region"] == "North")]</code></pre></div>
+    <p>Forget the inner brackets and you'll get a confusing error, because <code class="inline">&amp;</code> binds tighter than <code class="inline">&gt;</code>. This is the one place the everyday <code class="inline">and</code>/<code class="inline">or</code> rule flips.</p></div></details>
+
+    <details class="qa"><summary>.loc vs .iloc — what's the difference?</summary>
+    <div class="qa-body"><p><code class="inline">.loc</code> selects by <b>label</b> (column names, the row's index value): <code class="inline">df.loc[0, "Revenue"]</code>. <code class="inline">.iloc</code> selects by <b>integer position</b>, like a list: <code class="inline">df.iloc[0, 2]</code> = first row, third column. Use <code class="inline">.loc</code> when you know the names, <code class="inline">.iloc</code> when you just want "the first 5 rows" — <code class="inline">df.iloc[:5]</code>.</p></div></details>
+
+    <div class="challenge"><span class="lab">🧠 Think it through</span>
+    <p>Before running it, predict what rows come back from this — and notice what's being compared:</p>
+    <div class="codewrap"><pre><code class="language-python">df[df["Revenue"] > df["Cost"]]</code></pre></div>
+    <details class="sol"><summary>Reveal</summary><p>The <b>profitable</b> rows — every order where revenue beat cost. The key insight: a mask doesn't have to compare a column to a fixed number; you can compare <i>two columns to each other</i>, row by row. pandas lines them up automatically. Follow-up to chew on: how would you count how many such rows there are? (Hint: <code class="inline">len(...)</code>, or <code class="inline">(df["Revenue"] &gt; df["Cost"]).sum()</code> — because <code class="inline">True</code> counts as 1.)</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BLOCK 6 ===================== -->
+<section id="b6">
+  <span class="blocktag">Block 7</span>
+  <h2 class="bh">Errors &amp; where to go next</h2>
+  <div class="time">⏱ 5 min · Goal: leave unafraid of red text</div>
+
+  <p>Errors aren't failure — they're Python telling you exactly what and where. <b>Read the bottom line first:</b> it names the error type and the line number.</p>
+
+  <h3>The four errors you'll meet 90% of the time</h3>
+  <table class="cheat">
+    <tr><th>Error</th><th>What it usually means</th><th>The fix</th></tr>
+    <tr><td><code>NameError</code></td><td>Used a variable that doesn't exist (often a typo)</td><td>Check spelling; run the cell that defines it</td></tr>
+    <tr><td><code>TypeError</code></td><td>Mixed incompatible types, e.g. text + number</td><td>Convert with <code>int()</code>/<code>str()</code></td></tr>
+    <tr><td><code>IndexError</code> / <code>KeyError</code></td><td>Asked for an item/key that isn't there</td><td>Remember counting starts at 0; check the key exists</td></tr>
+    <tr><td><code>IndentationError</code></td><td>Wrong spacing inside an if/for/def</td><td>Line up the indented block consistently</td></tr>
+  </table>
+
+  <h3>Your debugging habit</h3>
+  <ul>
+    <li><b>Print the variable</b> to see what's actually inside it.</li>
+    <li><b>Re-run from the top</b> — <code class="inline">Runtime → Restart and run all</code>.</li>
+    <li><b>Ask for help well:</b> paste the <i>code</i> + the <i>full error message</i>. That's 90% of getting a useful answer from docs, a classmate, or an AI assistant.</li>
+  </ul>
+
+  <p>Reference docs: <a href="https://docs.python.org/3/" target="_blank">Python docs</a> · <a href="https://pandas.pydata.org/docs/" target="_blank">pandas docs</a></p>
+
+  <div class="faq">
+    <h3 class="faqh">❓ Questions &amp; challenges</h3>
+
+    <details class="qa"><summary>Is reading just the last line of an error really enough?</summary>
+    <div class="qa-body"><p>About 80% of the time, yes — the last line names the error type and the message, and the line number points you close. The block above it (the "traceback") shows the path the code took to get there, which matters when the error happens deep inside a function or a library you called.</p></div></details>
+
+    <details class="qa"><summary>How do I ask an AI or a classmate for help well?</summary>
+    <div class="qa-body"><p>Give them three things: the <i>code</i> that broke, the <i>full error message</i> (not a paraphrase), and what you <i>expected</i> to happen. That trio answers 90% of follow-up questions before they're asked — and forcing yourself to write it out often reveals the bug on its own.</p></div></details>
+
+    <div class="challenge"><span class="lab">🧠 Think it through</span>
+    <p>Python says the error is on line 12, but line 12 looks perfectly fine. Where else should you look first?</p>
+    <details class="sol"><summary>Reveal</summary><p>The line <i>above</i> — line 11. An unclosed bracket, quote, or parenthesis on one line makes Python keep reading onto the next, so it only notices something is wrong when it hits line 12 and blames it. Whenever the flagged line looks innocent, check the line before for a missing <code class="inline">)</code>, <code class="inline">]</code>, or quote. Reported line numbers point to where Python <i>got confused</i>, not always where <i>you</i> made the mistake.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CHEAT SHEET ===================== -->
+<section id="cheat">
+  <span class="blocktag">★ Keep this open</span>
+  <h2 class="bh">One-page cheat sheet</h2>
+
+  <table class="cheat">
+    <tr><th>Want to…</th><th>Write</th></tr>
+    <tr><td>Store a value</td><td><code>revenue = 5000</code></td></tr>
+    <tr><td>Show something</td><td><code>print(f"Total is {revenue}")</code></td></tr>
+    <tr><td>Make a list</td><td><code>sales = [200, 450, 130]</code></td></tr>
+    <tr><td>First / last item</td><td><code>sales[0]</code> · <code>sales[-1]</code></td></tr>
+    <tr><td>Count / total a list</td><td><code>len(sales)</code> · <code>sum(sales)</code></td></tr>
+    <tr><td>Add to a list</td><td><code>sales.append(310)</code></td></tr>
+    <tr><td>Make a lookup</td><td><code>prices = {"mug": 12}</code></td></tr>
+    <tr><td>Look up by key</td><td><code>prices["mug"]</code></td></tr>
+    <tr><td>Power · whole-divide · remainder</td><td><code>2 ** 3</code> · <code>17 // 5</code> · <code>17 % 5</code></td></tr>
+    <tr><td>Force order of operations</td><td><code>price + (price * tax)</code></td></tr>
+    <tr><td>Combine conditions</td><td><code>a and b</code> · <code>a or b</code> · <code>not a</code></td></tr>
+    <tr><td>Compare (not assign)</td><td><code>==</code>  <code>!=</code>  <code>&gt;</code>  <code>&lt;</code>  <code>&gt;=</code></td></tr>
+    <tr><td>Make a decision</td><td><code>if x &gt;= 500: ... elif ... else ...</code></td></tr>
+    <tr><td>Repeat over a list</td><td><code>for x in sales:</code></td></tr>
+    <tr><td>Repeat until a condition</td><td><code>while balance &gt; 0:</code></td></tr>
+    <tr><td>Make your own function</td><td><code>def name(args): return ...</code></td></tr>
+    <tr><td>Load a CSV</td><td><code>df = pd.read_csv("orders.csv")</code></td></tr>
+    <tr><td>Peek / inspect data</td><td><code>df.head()</code> · <code>df.info()</code> · <code>df.describe()</code></td></tr>
+    <tr><td>Show a table nicely</td><td><code>display(df)</code> (not <code>print</code>)</td></tr>
+    <tr><td>Tally / distinct values</td><td><code>df["Region"].value_counts()</code> · <code>.unique()</code></td></tr>
+    <tr><td>Summarize a column</td><td><code>df["Revenue"].sum()</code> · <code>.mean()</code></td></tr>
+    <tr><td>Add a calculated column</td><td><code>df["Profit"] = df["Revenue"] - df["Cost"]</code></td></tr>
+    <tr><td>Sort</td><td><code>df.sort_values("Revenue", ascending=False)</code></td></tr>
+    <tr><td>Filter rows (one rule)</td><td><code>df[df["Revenue"] &gt; 500]</code></td></tr>
+    <tr><td>Filter rows (two rules)</td><td><code>df[(df["Revenue"]&gt;500) &amp; (df["Region"]=="North")]</code></td></tr>
+    <tr><td>Missing data</td><td><code>df.isna().sum()</code> · <code>df.dropna()</code></td></tr>
+    <tr><td>Group &amp; total</td><td><code>df.groupby("Region")["Revenue"].sum()</code></td></tr>
+  </table>
+</section>
+
+<footer>
+  Python Basics Booster · 2-hour session · Built for business students working in Google Colab.<br>
+  Tip: keep this page open in a second tab next to your notebook as a reference.
+</footer>
+
+</main>
+</div>
+
+<script>
+  // syntax highlighting
+  document.addEventListener('DOMContentLoaded',function(){
+    document.querySelectorAll('pre code').forEach(function(b){
+      try{hljs.highlightElement(b);}catch(e){}
+    });
+  });
+  // copy buttons
+  document.querySelectorAll('.codewrap').forEach(function(w){
+    var btn=document.createElement('button');
+    btn.className='copybtn';btn.textContent='Copy';
+    btn.addEventListener('click',function(){
+      var code=w.querySelector('code');
+      navigator.clipboard.writeText(code.innerText).then(function(){
+        btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy';},1400);
+      });
+    });
+    w.appendChild(btn);
+  });
+</script>
+</body>
+</html>
